@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Front Desk — Clinic Queue</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="brand"><span class="dot"></span><span>Clinic Queue — Front Desk</span></div>
+
+  <div class="wrap">
+
+    <!-- Logged out: login form -->
+    <div id="loginView" class="card" style="max-width:400px; margin:0 auto;">
+      <h1>Staff sign in</h1>
+      <p class="muted">One-time setup for this device — you won't need to sign in again.</p>
+      <form id="loginForm">
+        <label for="email">Email</label>
+        <input type="email" id="email" required autocomplete="username" />
+        <label for="password">Password</label>
+        <input type="password" id="password" required autocomplete="current-password" />
+        <p class="error-text" id="loginError" style="display:none;"></p>
+        <button type="submit" class="btn-primary" style="width:100%;">Sign in</button>
+      </form>
+    </div>
+
+    <!-- Logged in: main app -->
+    <div id="appView" style="display:none;">
+
+      <div class="card" style="margin-bottom:20px;">
+        <h2>Check in a patient</h2>
+        <form id="checkinForm" style="display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap;">
+          <div style="flex:1; min-width:200px;">
+            <label for="patientName">Patient name or initials</label>
+            <input type="text" id="patientName" placeholder="e.g. J. Otieno" required />
+          </div>
+          <button type="submit" class="btn-primary" style="height:47px;">Check in</button>
+        </form>
+        <div id="ticketResult"></div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <h2 style="margin:0;">Current queue</h2>
+          <button id="signOutBtn" class="btn-ghost" style="padding:6px 14px; font-size:0.85rem;">Sign out</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Code</th>
+              <th>Patient</th>
+              <th>Status</th>
+              <th>Wait</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="queueBody">
+            <tr><td colspan="6" style="color:var(--gray);">Loading queue…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/receptionist.js"></script>
+</body>
+</html>

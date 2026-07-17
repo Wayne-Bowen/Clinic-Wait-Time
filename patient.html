@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Your Wait Time</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="brand"><span class="dot"></span><span>Clinic Queue</span></div>
+
+  <div class="patient-screen">
+
+    <!-- Shown only if no ticket code is known yet -->
+    <div id="entryCard" class="patient-card" style="display:none;">
+      <h1>Enter your ticket code</h1>
+      <p class="muted">This is the code your receptionist gave you.</p>
+      <form id="codeForm" style="text-align:left;">
+        <input type="text" id="codeInput" maxlength="8" placeholder="e.g. A1B2"
+          style="text-transform:uppercase; text-align:center; font-size:1.3rem; letter-spacing:0.1em;" required />
+        <button type="submit" class="btn-primary" style="width:100%;">Show my wait time</button>
+      </form>
+      <p class="error-text" id="entryError" style="display:none;"></p>
+    </div>
+
+    <!-- Shown once we have a ticket code -->
+    <div id="waitCard" class="patient-card" style="display:none;">
+      <div class="patient-eyebrow" id="ticketLabel">Ticket —</div>
+      <div class="wait-number" id="waitNumber">—</div>
+      <div class="wait-unit" id="waitUnit">minutes</div>
+      <div class="wait-status-msg" id="statusMsg"></div>
+      <div class="wait-sub" id="subMsg"></div>
+      <button id="notMineBtn" class="btn-ghost" style="margin-top:22px; font-size:0.82rem; padding:8px 14px;">
+        This isn't my ticket
+      </button>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/patient.js"></script>
+</body>
+</html>

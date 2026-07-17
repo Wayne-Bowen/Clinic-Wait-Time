@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap');
+
+:root {
+  --ink: #1F2A2E;
+  --paper: #F6F7F4;
+  --teal: #2F6F62;
+  --teal-dark: #204F45;
+  --amber: #E8A33D;
+  --gray: #7C8B87;
+  --line: #DFE3DF;
+  --danger: #C1543C;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+}
+
+.brand .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--teal);
+}
+
+.brand span {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Generic layout ---------- */
+
+.wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+h1 { font-size: 1.4rem; margin: 0 0 4px; }
+h2 { font-size: 1.05rem; margin: 0 0 14px; }
+p.muted { color: var(--gray); margin: 0 0 20px; font-size: 0.92rem; }
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  margin-bottom: 16px;
+  background: #fcfdfc;
+}
+
+input:focus {
+  outline: 2px solid var(--teal);
+  outline-offset: 1px;
+}
+
+button {
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: transform 0.05s ease, opacity 0.15s ease;
+}
+
+button:active { transform: scale(0.98); }
+
+.btn-primary { background: var(--teal); color: #fff; }
+.btn-primary:hover { background: var(--teal-dark); }
+.btn-ghost { background: transparent; color: var(--teal); border: 1px solid var(--teal); }
+.btn-call { background: var(--amber); color: #23180a; }
+.btn-done { background: var(--ink); color: #fff; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.error-text { color: var(--danger); font-size: 0.88rem; margin: -8px 0 16px; }
+
+/* ---------- Receptionist queue table ---------- */
+
+table { width: 100%; border-collapse: collapse; }
+th, td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.92rem;
+}
+th { color: var(--gray); font-weight: 500; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; }
+td.wait-min { font-family: 'Poppins', sans-serif; font-weight: 600; }
+
+.status-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.status-waiting { background: #EEF3F1; color: var(--teal-dark); }
+.status-in_progress { background: #FDF1DF; color: #8A5A15; }
+
+.actions { display: flex; gap: 8px; }
+
+.ticket-result {
+  margin-top: 20px;
+  padding: 20px;
+  border: 2px dashed var(--teal);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.ticket-result .code {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.ticket-result img { border-radius: 8px; border: 1px solid var(--line); }
+
+/* ---------- Patient view ---------- */
+
+.patient-screen {
+  min-height: calc(100vh - 66px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.patient-card {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 40px 28px;
+  text-align: center;
+}
+
+.patient-eyebrow {
+  font-size: 0.8rem;
+  color: var(--gray);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+.wait-number {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 4.2rem;
+  line-height: 1;
+  color: var(--teal-dark);
+  margin: 14px 0 4px;
+}
+
+.wait-unit {
+  font-size: 1.1rem;
+  color: var(--gray);
+  margin-bottom: 18px;
+}
+
+.wait-status-msg {
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.wait-sub {
+  color: var(--gray);
+  font-size: 0.88rem;
+}
+
+.pulse {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+@media (max-width: 480px) {
+  .wait-number { font-size: 3.4rem; }
+  .ticket-result { flex-direction: column; text-align: center; }
+}
