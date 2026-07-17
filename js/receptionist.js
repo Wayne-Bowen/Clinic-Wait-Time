@@ -102,6 +102,7 @@ checkinForm.addEventListener("submit", async (e) => {
 // ---------- Queue ----------
 
 async function loadQueue() {
+  await loadSettings(); // always use the current average, never a stale one
   const { data, error } = await sb
     .from("tickets")
     .select("*")
@@ -124,12 +125,12 @@ function renderQueue(tickets) {
   }
 
   let waitingPosition = 0;
-  queueBody.innerHTML = tickets.map((t) => {
+queueBody.innerHTML = tickets.map((t) => {
     let waitLabel = "—";
     if (t.status === "waiting") {
+      const aheadCount = waitingPosition; // patients ahead of this one, not including them
       waitingPosition += 1;
-      const mins = Math.round(waitingPosition * avgConsultMinutes);
-      waitLabel = `${mins} min`;
+      waitLabel = aheadCount === 0 ? "Next" : `${Math.round(aheadCount * avgConsultMinutes)} min`;
     } else if (t.status === "in_progress") {
       waitLabel = "Being seen";
     }
