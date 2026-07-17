@@ -105,12 +105,14 @@ async function fetchStatus(code) {
   ticketLabel.textContent = `Ticket ${t.ticket_code}`;
 
   if (t.status === "waiting") {
-    waitNumber.textContent = t.estimated_wait_minutes;
-    waitUnit.textContent = "minutes";
     waitNumber.classList.remove("pulse");
     if (t.position_in_queue === 0) {
-      statusMsg.textContent = "You're next!";
+      waitNumber.textContent = "Next";
+      waitUnit.textContent = "";
+      statusMsg.textContent = "You'll be called any moment";
     } else {
+      waitNumber.textContent = t.estimated_wait_minutes;
+      waitUnit.textContent = "minutes";
       statusMsg.textContent = `${t.position_in_queue} patient${t.position_in_queue === 1 ? "" : "s"} ahead of you`;
     }
     subMsg.textContent = "This screen updates on its own — no need to refresh.";
