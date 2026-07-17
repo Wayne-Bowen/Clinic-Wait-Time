@@ -49,7 +49,7 @@ maintain.
 - Patients without a smartphone can just be told the 4-character code and
   type it into any browser at `patient.html`.
 
-## How this maps to your constraints
+## How this maps to  constraints
 
 **Budget** — Supabase free tier (Postgres + Auth + Realtime) and free static
 hosting cover everything. The QR codes are generated through a free,
@@ -72,7 +72,7 @@ a row. There are no settings, no menus, no jargon.
   (`authenticated` role), which is the only role the "staff full access"
   policy trusts.
 
-## How this maps to your acceptance tests
+## How this maps to  acceptance tests
 
 1. **Receptionist needs no training** — the whole interface is a check-in
    box and a table with Call/Complete buttons.
