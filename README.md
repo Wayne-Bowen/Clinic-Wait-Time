@@ -4,6 +4,22 @@ Plain HTML/CSS/JS frontend + Supabase backend. No build step, no framework —
 open the files or host them as static files anywhere free (GitHub Pages,
 Netlify, Vercel, Cloudflare Pages).
 
+## Live Demo
+
+- **App:** https://clientwaittime.netlify.app/
+- **Patient view:** https://clientwaittime.netlify.app/patient — no login needed, works with any active ticket code
+- **Receptionist view:** https://clientwaittime.netlify.app/receptionist — staff-only, requires sign-in
+
+**Demo login (for reviewers only — not a real clinic account):**
+```
+Email:    demo.reception@clinicqueue.app
+Password: 1111
+```
+This is a throwaway account created solely so recruiters/reviewers can see
+the receptionist dashboard. It is not a personal account and has no real
+patient data behind it — feel free to check patients in and mark them done,
+it's a sandbox.
+
 ## 1. Set up Supabase (free tier)
 
 1. Create a project at supabase.com (free tier is enough for a single clinic).
@@ -49,7 +65,27 @@ maintain.
 - Patients without a smartphone can just be told the 4-character code and
   type it into any browser at `patient.html`.
 
-## How this maps to  constraints
+## Architecture & security notes
+
+- **No sign-up flow, by design.** This is a single-tenant app — one clinic,
+  one receptionist login — not a multi-tenant SaaS product. There's
+  intentionally no public registration.
+- **Row Level Security is on** for the `tickets` table, and there is no
+  policy granting the patient role (`anon`) any direct access to it. Even
+  someone who opened the browser dev tools and tried to query Supabase
+  directly would get nothing back.
+- Patients only ever reach their own row through `get_ticket_status()`, a
+  `security definer` function that takes one ticket code and returns only
+  that one ticket's status — never the rest of the queue.
+- The receptionist's full-queue access comes from being signed in
+  (`authenticated` role), which is the only role the "staff full access"
+  policy trusts.
+- Wait time estimates use a weighted rolling average
+  (`avg = old_avg * 0.8 + last_consult_duration * 0.2`), stored in a
+  single-row `clinic_settings` table, so estimates improve over time as
+  real consult data comes in.
+
+## How this maps to constraints
 
 **Budget** — Supabase free tier (Postgres + Auth + Realtime) and free static
 hosting cover everything. The QR codes are generated through a free,
@@ -60,19 +96,10 @@ the stack.
 two actions: type a name and click a button, or click "Call"/"Complete" on
 a row. There are no settings, no menus, no jargon.
 
-**Privacy** — enforced at the database level, not just hidden in the UI:
-- Row Level Security is *on* for the `tickets` table, and there is no
-  policy granting the patient role (`anon`) any direct access to it. Even
-  someone who opened the browser dev tools and tried to query Supabase
-  directly would get nothing back.
-- Patients only ever reach their own row through `get_ticket_status()`, a
-  function that takes one ticket code and returns only that one ticket's
-  status — never the rest of the queue.
-- The receptionist's full-queue access comes from being signed in
-  (`authenticated` role), which is the only role the "staff full access"
-  policy trusts.
+**Privacy** — enforced at the database level, not just hidden in the UI.
+See "Architecture & security notes" above.
 
-## How this maps to  acceptance tests
+## How this maps to acceptance tests
 
 1. **Receptionist needs no training** — the whole interface is a check-in
    box and a table with Call/Complete buttons.
@@ -95,7 +122,8 @@ a row. There are no settings, no menus, no jargon.
 
 - SMS notifications when a patient is nearly up.
 - Manual queue reordering / priority flag for urgent walk-ins (the schema
-  already has a `priority` column ready for this — just need a UI control).
+  already has a `priority` column and the queue ordering already respects
+  it — just no UI control yet to set it above the default).
 - Analytics/reporting on wait times over time.
 
 These are natural next phases once the core loop is running in the clinic.
